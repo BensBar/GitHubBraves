@@ -1,0 +1,341 @@
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem 2rem;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #1f2940;
+  border-radius: 1.5rem;
+  margin-top: 1.25rem;
+  padding: 4.5rem 1.5rem;
+  text-align: center;
+  background:
+    radial-gradient(circle at 25% 30%, rgba(206, 17, 65, 0.35), transparent 45%),
+    radial-gradient(circle at 75% 20%, rgba(19, 39, 79, 0.5), transparent 40%),
+    linear-gradient(140deg, #050b18, #0a1f3f 45%, #081123);
+  box-shadow: 0 30px 60px rgba(3, 7, 16, 0.55);
+}
+
+.hero-glow,
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-glow {
+  background: conic-gradient(
+    from 20deg,
+    rgba(206, 17, 65, 0.55),
+    rgba(19, 39, 79, 0.65),
+    rgba(255, 255, 255, 0.1),
+    rgba(206, 17, 65, 0.5)
+  );
+  filter: blur(60px);
+  animation: drift 10s linear infinite;
+}
+
+.hero-overlay {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  opacity: 0.35;
+}
+
+@keyframes drift {
+  from {
+    transform: rotate(0deg) scale(1.05);
+  }
+
+  to {
+    transform: rotate(360deg) scale(1.1);
+  }
+}
+
+.brand-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.braves-logo {
+  width: 70px;
+  height: 70px;
+}
+
+.github-logo {
+  width: 64px;
+  height: 64px;
+  color: #f6f8fa;
+}
+
+.plus {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #d0d7de;
+}
+
+.eyebrow {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #f1f5f9;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+h1 {
+  position: relative;
+  z-index: 1;
+  margin: 0.8rem 0;
+  color: #ffffff;
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  line-height: 1.1;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+  color: #d6e3ff;
+}
+
+.cta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 190px;
+  padding: 0.85rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  background: linear-gradient(90deg, #ce1141, #f94565);
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(249, 69, 101, 0.4);
+}
+
+.countdown {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.countdown-tile {
+  border: 1px solid #23345f;
+  border-radius: 1rem;
+  text-align: center;
+  padding: 1rem;
+  background: linear-gradient(180deg, rgba(9, 21, 44, 0.9), rgba(4, 9, 22, 0.92));
+}
+
+.countdown-tile span {
+  display: block;
+  color: #f8fbff;
+  font-size: clamp(1.4rem, 3.2vw, 2.5rem);
+  font-weight: 700;
+}
+
+.countdown-tile small {
+  text-transform: uppercase;
+  color: #91a4c5;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.3rem);
+  color: #f5f8ff;
+  margin-bottom: 1rem;
+}
+
+.tiers,
+.schedule,
+.signup {
+  margin-top: 1.8rem;
+  border: 1px solid #1f2940;
+  border-radius: 1.2rem;
+  padding: 1.4rem;
+  background: linear-gradient(180deg, rgba(8, 16, 32, 0.85), rgba(6, 12, 24, 0.9));
+}
+
+.tier-grid,
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.tier-card,
+.schedule-card {
+  border: 1px solid #273454;
+  border-radius: 0.95rem;
+  padding: 1rem;
+  background: linear-gradient(180deg, rgba(13, 27, 57, 0.75), rgba(9, 17, 34, 0.9));
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.tier-card:hover,
+.schedule-card:hover {
+  transform: translateY(-3px);
+  border-color: #4e6aa7;
+}
+
+h3 {
+  margin: 0 0 0.35rem;
+  color: #ffffff;
+}
+
+.tier-subtitle,
+.time {
+  margin: 0 0 0.35rem;
+  color: #9db6df;
+  font-weight: 600;
+}
+
+.signup {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 1rem;
+}
+
+.signup-copy ul {
+  margin-top: 0.7rem;
+  padding-left: 1.15rem;
+  color: #b6c8e5;
+}
+
+.signup-form {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.signup-form label {
+  color: #d9e5ff;
+  font-size: 0.9rem;
+}
+
+.signup-form input,
+.signup-form textarea {
+  border-radius: 0.6rem;
+  border: 1px solid #2a3c64;
+  background: rgba(8, 16, 32, 0.9);
+  color: #ecf2ff;
+  padding: 0.68rem;
+  font: inherit;
+}
+
+.signup-form input:focus,
+.signup-form textarea:focus {
+  outline: 2px solid #f94565;
+  border-color: #f94565;
+}
+
+.consent {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  margin-top: 0.45rem;
+}
+
+.consent input {
+  margin-top: 0.2rem;
+}
+
+.signup-form button {
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  background: linear-gradient(90deg, #ce1141, #f94565);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.signup-form button:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.status {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+}
+
+.status.success {
+  color: #7cf0ba;
+}
+
+.status.error {
+  color: #ff9fb2;
+}
+
+.trap {
+  position: absolute;
+  left: -9999px;
+}
+
+footer {
+  margin-top: 1.4rem;
+  border: 1px solid #1f2940;
+  border-radius: 1rem;
+  padding: 1rem;
+  color: #8ea6ce;
+  background: rgba(6, 12, 24, 0.8);
+}
+
+footer p {
+  margin: 0;
+}
+
+footer p + p {
+  margin-top: 0.55rem;
+}
+
+@media (max-width: 900px) {
+  .countdown,
+  .tier-grid,
+  .schedule-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .signup {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero {
+    padding: 3.4rem 1rem;
+  }
+
+  .countdown,
+  .tier-grid,
+  .schedule-grid {
+    grid-template-columns: 1fr;
+  }
+
+  main {
+    padding-inline: 0.75rem;
+  }
+}
