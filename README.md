@@ -1,16 +1,48 @@
-# React + Vite
+# GitHub Braves Event Microsite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Static React/Vite microsite designed for GitHub Pages with secure external registration handling.
 
-Currently, two official plugins are available:
+## What this site includes
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Graphically intense landing page with Braves + GitHub branding
+- Dynamic countdown, seat-tier cards, and timeline cards
+- External secure registration flow (Formspree endpoint)
+- Cloudflare Turnstile challenge integration point
+- Legal trademark and privacy copy for launch readiness
 
-## React Compiler
+## Secure architecture
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This repository only serves static content on GitHub Pages.
 
-## Expanding the ESLint configuration
+- Form posts go to `VITE_FORMSPREE_ENDPOINT` (or another secure external endpoint)
+- Bot checks are handled with Cloudflare Turnstile (`VITE_TURNSTILE_SITE_KEY`)
+- Server-side validation, rate limiting, and secure storage must be configured in the external backend
+- No customer registration data is stored in this repository
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Local development
+
+```bash
+npm install
+cp .env.example .env
+npm run dev
+```
+
+## Validation
+
+```bash
+npm run lint
+npm run build
+```
+
+## GitHub Pages deployment
+
+Vite is configured with `base: '/GitHubBraves/'` for this repository.
+
+Build output is generated in `dist/` and can be published with a standard GitHub Pages workflow or Pages deployment action.
+
+## Production setup checklist
+
+1. Replace `VITE_FORMSPREE_ENDPOINT` with a live secure form endpoint
+2. Replace `VITE_TURNSTILE_SITE_KEY` with your production Turnstile site key
+3. Confirm external provider handles HTTPS, rate limiting, validation, and private data storage
+4. Verify logo licensing approval for Atlanta Braves assets before public release
