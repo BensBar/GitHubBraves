@@ -1,15 +1,16 @@
 :root {
   font-family:
+    'Mona Sans',
     Inter,
     'Segoe UI',
     system-ui,
     -apple-system,
     BlinkMacSystemFont,
     sans-serif;
-  line-height: 1.45;
+  line-height: 1.5;
   font-weight: 400;
-  color: #cfdbf3;
-  background: #050a14;
+  color: #c9d1d9;
+  background: #0d1117;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -29,9 +30,9 @@ body,
 body {
   margin: 0;
   background:
-    radial-gradient(circle at 20% -10%, rgba(206, 17, 65, 0.22), transparent 40%),
-    radial-gradient(circle at 80% -15%, rgba(19, 39, 79, 0.35), transparent 35%),
-    #050a14;
+    radial-gradient(circle at 85% -10%, rgba(137, 87, 229, 0.12), transparent 45%),
+    radial-gradient(circle at 10% -15%, rgba(19, 39, 79, 0.35), transparent 40%),
+    #0d1117;
 }
 
 a {
