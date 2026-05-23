@@ -291,6 +291,8 @@ function App() {
         <span><strong>Venue</strong> Truist Park</span>
         <span aria-hidden="true" className="stat-dot">·</span>
         <span><strong>Date</strong> June 18, 2026</span>
+        <span aria-hidden="true" className="stat-dot">·</span>
+        <span><strong>Game</strong> Braves vs. Giants</span>
       </section>
 
       <section className="scoreboard" aria-label="Countdown to first pitch">
