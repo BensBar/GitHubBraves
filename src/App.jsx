@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
-const EVENT_DATE = new Date('2026-09-18T23:00:00Z')
+const EVENT_DATE = new Date('2026-06-18T23:00:00Z')
 const FORM_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/YOUR_FORM_ID'
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'
 
@@ -290,7 +290,7 @@ function App() {
         <span aria-hidden="true" className="stat-dot">·</span>
         <span><strong>Venue</strong> Truist Park</span>
         <span aria-hidden="true" className="stat-dot">·</span>
-        <span><strong>Date</strong> Sept 18, 2026</span>
+        <span><strong>Date</strong> June 18, 2026</span>
       </section>
 
       <section className="scoreboard" aria-label="Countdown to first pitch">
