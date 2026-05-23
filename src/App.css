@@ -1,227 +1,456 @@
+:root {
+  /* GitHub dark canvas */
+  --gh-canvas: #0d1117;
+  --gh-surface: #161b22;
+  --gh-surface-hi: #1c2230;
+  --gh-border: #30363d;
+  --gh-border-muted: #21262d;
+  --gh-text: #f0f6fc;
+  --gh-text-muted: #8b949e;
+  --gh-text-soft: #c9d1d9;
+
+  /* GitHub accents */
+  --gh-green: #238636;
+  --gh-green-hover: #2ea043;
+  --gh-purple: #8957e5;
+
+  /* Braves accents (used sparingly) */
+  --braves-navy: #13274F;
+  --braves-red: #CE1141;
+
+  /* Scoreboard amber */
+  --scoreboard-amber: #ffb547;
+  --scoreboard-amber-dim: #5a3d10;
+  --scoreboard-bg: #0a0d0a;
+}
+
 main {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.25rem 2rem;
 }
 
+/* ---------- Hero ---------- */
+
 .hero {
   position: relative;
   overflow: hidden;
-  border: 1px solid #1f2940;
-  border-radius: 1.5rem;
+  border: 1px solid var(--gh-border);
+  border-radius: 1.25rem;
   margin-top: 1.25rem;
-  padding: 4.5rem 1.5rem;
-  text-align: center;
+  padding: 3rem 2rem;
   background:
-    radial-gradient(circle at 25% 30%, rgba(206, 17, 65, 0.35), transparent 45%),
-    radial-gradient(circle at 75% 20%, rgba(19, 39, 79, 0.5), transparent 40%),
-    linear-gradient(140deg, #050b18, #0a1f3f 45%, #081123);
-  box-shadow: 0 30px 60px rgba(3, 7, 16, 0.55);
+    radial-gradient(circle at 85% 10%, rgba(137, 87, 229, 0.18), transparent 45%),
+    radial-gradient(circle at 10% 110%, rgba(19, 39, 79, 0.55), transparent 50%),
+    var(--gh-canvas);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
 
-.hero-glow,
-.hero-overlay {
+.hero-vignette {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.04), transparent 60%);
 }
 
-.hero-glow {
-  background: conic-gradient(
-    from 20deg,
-    rgba(206, 17, 65, 0.55),
-    rgba(19, 39, 79, 0.65),
-    rgba(255, 255, 255, 0.1),
-    rgba(206, 17, 65, 0.5)
-  );
-  filter: blur(60px);
-  animation: drift 10s linear infinite;
-}
-
-.hero-overlay {
+/* faint diagonal baseball-stitch pattern */
+.hero-stitch {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
   background-image: repeating-linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 0.05),
-    rgba(255, 255, 255, 0.05) 1px,
-    transparent 1px,
-    transparent 4px
+    45deg,
+    transparent 0 14px,
+    var(--braves-red) 14px 16px,
+    transparent 16px 22px,
+    var(--braves-red) 22px 24px,
+    transparent 24px 38px
   );
-  opacity: 0.35;
 }
 
-@keyframes drift {
-  from {
-    transform: rotate(0deg) scale(1.05);
-  }
+.hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 2.5rem;
+  align-items: center;
+}
 
-  to {
-    transform: rotate(360deg) scale(1.1);
-  }
+.hero-content {
+  text-align: left;
 }
 
 .brand-row {
-  position: relative;
-  z-index: 1;
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.braves-logo {
-  width: 70px;
-  height: 70px;
+  margin-bottom: 1.5rem;
 }
 
 .github-logo {
-  width: 64px;
-  height: 64px;
-  color: #f6f8fa;
+  width: 72px;
+  height: 72px;
+  color: var(--gh-text);
 }
 
-.plus {
-  font-size: 1.7rem;
-  font-weight: 700;
-  color: #d0d7de;
+.braves-logo {
+  width: 56px;
+  height: 56px;
+}
+
+.brand-at {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gh-text-muted);
 }
 
 .eyebrow {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  color: #f1f5f9;
-  letter-spacing: 0.06em;
+  margin: 0 0 0.6rem;
+  color: var(--gh-text-muted);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
 }
 
 h1 {
-  position: relative;
-  z-index: 1;
-  margin: 0.8rem 0;
-  color: #ffffff;
-  font-size: clamp(2rem, 5vw, 3.75rem);
-  line-height: 1.1;
+  margin: 0 0 1rem;
+  color: var(--gh-text);
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 800;
 }
 
 .hero-copy {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
-  margin: 0 auto 1.5rem;
-  color: #d6e3ff;
+  max-width: 540px;
+  margin: 0 0 1.75rem;
+  color: var(--gh-text-soft);
+  font-size: 1.02rem;
+  line-height: 1.55;
 }
 
 .cta {
-  position: relative;
-  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 190px;
-  padding: 0.85rem 1.2rem;
-  border-radius: 999px;
+  gap: 0.55rem;
+  min-width: 200px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
   text-decoration: none;
-  background: linear-gradient(90deg, #ce1141, #f94565);
-  color: white;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: var(--gh-green);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.98rem;
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  transition: background-color 0.15s ease, transform 0.15s ease;
 }
 
 .cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(249, 69, 101, 0.4);
+  background: var(--gh-green-hover);
+  transform: translateY(-1px);
 }
 
-.countdown {
+.cta .diamond-icon {
+  color: #ffffff;
+}
+
+.hero-art {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-illustration {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+}
+
+/* ---------- Stat strip ---------- */
+
+.stat-strip {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--gh-border);
+  border-radius: 0.75rem;
+  background: var(--gh-surface);
+  color: var(--gh-text-soft);
+  font-size: 0.92rem;
+}
+
+.stat-strip strong {
+  color: var(--gh-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.74rem;
+  margin-right: 0.4rem;
+}
+
+.stat-dot {
+  color: var(--gh-border);
+}
+
+/* ---------- Scoreboard countdown ---------- */
+
+.scoreboard {
   margin-top: 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.8rem;
-}
-
-.countdown-tile {
-  border: 1px solid #23345f;
+  border: 1px solid var(--braves-navy);
   border-radius: 1rem;
-  text-align: center;
-  padding: 1rem;
-  background: linear-gradient(180deg, rgba(9, 21, 44, 0.9), rgba(4, 9, 22, 0.92));
+  padding: 1.25rem;
+  background:
+    linear-gradient(180deg, rgba(19, 39, 79, 0.35), rgba(10, 13, 10, 0.95)),
+    var(--scoreboard-bg);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.02);
 }
 
-.countdown-tile span {
-  display: block;
-  color: #f8fbff;
-  font-size: clamp(1.4rem, 3.2vw, 2.5rem);
+.scoreboard-label {
+  margin: 0 0 0.75rem;
+  text-align: center;
+  color: var(--scoreboard-amber);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.78rem;
   font-weight: 700;
 }
 
-.countdown-tile small {
-  text-transform: uppercase;
-  color: #91a4c5;
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
 }
 
+.countdown-tile {
+  border: 1px solid #1a1d1a;
+  border-radius: 0.5rem;
+  padding: 0.9rem 0.5rem;
+  text-align: center;
+  background: var(--scoreboard-bg);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    inset 0 0 24px rgba(255, 181, 71, 0.05);
+}
+
+.countdown-tile .digits {
+  display: block;
+  color: var(--scoreboard-amber);
+  font-family:
+    'DSEG7 Classic', 'Share Tech Mono', ui-monospace, 'SF Mono', Menlo,
+    Consolas, 'Liberation Mono', monospace;
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-shadow:
+    0 0 6px rgba(255, 181, 71, 0.55),
+    0 0 18px rgba(255, 181, 71, 0.25);
+}
+
+.countdown-tile small {
+  display: block;
+  margin-top: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--scoreboard-amber-dim);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* ---------- Stitch divider ---------- */
+
+.stitch-divider {
+  margin: 1.5rem auto;
+  height: 6px;
+  max-width: 90%;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 6px,
+      var(--braves-red) 6px 14px,
+      transparent 14px 22px
+    );
+  opacity: 0.55;
+}
+
+/* ---------- Sections ---------- */
+
 h2 {
-  font-size: clamp(1.5rem, 3vw, 2.3rem);
-  color: #f5f8ff;
-  margin-bottom: 1rem;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  color: var(--gh-text);
+  margin: 0 0 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .tiers,
 .schedule,
-.signup {
-  margin-top: 1.8rem;
-  border: 1px solid #1f2940;
-  border-radius: 1.2rem;
-  padding: 1.4rem;
-  background: linear-gradient(180deg, rgba(8, 16, 32, 0.85), rgba(6, 12, 24, 0.9));
+.signup,
+.faq {
+  margin-top: 1.5rem;
+  border: 1px solid var(--gh-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background: var(--gh-surface);
 }
 
-.tier-grid,
-.schedule-grid {
+.tier-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.9rem;
+  gap: 1rem;
 }
 
-.tier-card,
-.schedule-card {
-  border: 1px solid #273454;
-  border-radius: 0.95rem;
-  padding: 1rem;
-  background: linear-gradient(180deg, rgba(13, 27, 57, 0.75), rgba(9, 17, 34, 0.9));
-  transition: transform 0.2s ease, border-color 0.2s ease;
+/* ---------- Ticket-stub tier cards ---------- */
+
+.tier-card {
+  position: relative;
+  border: 1px solid var(--gh-border);
+  border-radius: 0.75rem;
+  padding: 1.1rem 1.1rem 1.5rem;
+  background:
+    radial-gradient(circle at 0% 50%, transparent 9px, var(--gh-surface-hi) 9px),
+    radial-gradient(circle at 100% 50%, transparent 9px, var(--gh-surface-hi) 9px);
+  background-size: 50% 100%;
+  background-position: left center, right center;
+  background-repeat: no-repeat;
+  transition: transform 0.15s ease, border-color 0.15s ease;
 }
 
-.tier-card:hover,
-.schedule-card:hover {
-  transform: translateY(-3px);
-  border-color: #4e6aa7;
+.tier-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--gh-purple);
 }
 
-h3 {
-  margin: 0 0 0.35rem;
-  color: #ffffff;
+.ticket-stub-label {
+  margin: 0 0 0.6rem;
+  color: var(--braves-red);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
 }
 
-.tier-subtitle,
-.time {
-  margin: 0 0 0.35rem;
-  color: #9db6df;
+.tier-card h3 {
+  margin: 0 0 0.25rem;
+  color: var(--gh-text);
+  font-size: 1.15rem;
+}
+
+.tier-subtitle {
+  margin: 0 0 0.6rem;
+  color: var(--gh-text-muted);
   font-weight: 600;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
+
+.tier-details {
+  margin: 0;
+  color: var(--gh-text-soft);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* perforated tear line */
+.ticket-perf {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.65rem;
+  height: 1px;
+  background-image: linear-gradient(
+    90deg,
+    var(--gh-border) 0 6px,
+    transparent 6px 12px
+  );
+  background-size: 12px 1px;
+  background-repeat: repeat-x;
+}
+
+/* ---------- Lineup card (schedule) ---------- */
+
+.lineup-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--gh-border-muted);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.lineup-row {
+  display: grid;
+  grid-template-columns: 64px 90px 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--gh-border-muted);
+  background: var(--gh-surface-hi);
+}
+
+.lineup-row:last-child {
+  border-bottom: none;
+}
+
+.inning {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  background: var(--braves-navy);
+  color: var(--gh-text);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.lineup-time {
+  color: var(--scoreboard-amber);
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+}
+
+.lineup-title {
+  color: var(--gh-text);
+  font-weight: 500;
+}
+
+/* ---------- Signup ---------- */
 
 .signup {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
-.signup-copy ul {
-  margin-top: 0.7rem;
+.signup-copy p {
+  color: var(--gh-text-soft);
+  margin: 0 0 0.65rem;
+}
+
+.expect-list {
+  margin: 0.5rem 0 0;
   padding-left: 1.15rem;
-  color: #b6c8e5;
+  color: var(--gh-text-soft);
+  line-height: 1.55;
+}
+
+.expect-list li {
+  margin-bottom: 0.4rem;
 }
 
 .signup-form {
@@ -230,24 +459,25 @@ h3 {
 }
 
 .signup-form label {
-  color: #d9e5ff;
+  color: var(--gh-text-soft);
   font-size: 0.9rem;
 }
 
 .signup-form input,
 .signup-form textarea {
-  border-radius: 0.6rem;
-  border: 1px solid #2a3c64;
-  background: rgba(8, 16, 32, 0.9);
-  color: #ecf2ff;
-  padding: 0.68rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--gh-border);
+  background: var(--gh-canvas);
+  color: var(--gh-text);
+  padding: 0.65rem 0.7rem;
   font: inherit;
 }
 
 .signup-form input:focus,
 .signup-form textarea:focus {
-  outline: 2px solid #f94565;
-  border-color: #f94565;
+  outline: 2px solid var(--gh-purple);
+  outline-offset: 0;
+  border-color: var(--gh-purple);
 }
 
 .consent {
@@ -262,14 +492,19 @@ h3 {
 }
 
 .signup-form button {
-  border: none;
-  border-radius: 0.75rem;
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  border-radius: 0.5rem;
   padding: 0.75rem;
   margin-top: 0.5rem;
-  background: linear-gradient(90deg, #ce1141, #f94565);
-  color: white;
-  font-weight: 700;
+  background: var(--gh-green);
+  color: #ffffff;
+  font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.signup-form button:hover:not(:disabled) {
+  background: var(--gh-green-hover);
 }
 
 .signup-form button:disabled {
@@ -283,11 +518,11 @@ h3 {
 }
 
 .status.success {
-  color: #7cf0ba;
+  color: #56d364;
 }
 
 .status.error {
-  color: #ff9fb2;
+  color: #ff7b72;
 }
 
 .trap {
@@ -295,13 +530,70 @@ h3 {
   left: -9999px;
 }
 
+/* ---------- FAQ accordion ---------- */
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.faq-item {
+  border: 1px solid var(--gh-border-muted);
+  border-radius: 0.6rem;
+  background: var(--gh-surface-hi);
+  overflow: hidden;
+}
+
+.faq-item.open {
+  border-color: var(--gh-purple);
+}
+
+.faq-question {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--gh-text);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq-question:focus-visible {
+  outline: 2px solid var(--gh-purple);
+  outline-offset: -2px;
+}
+
+.faq-toggle {
+  color: var(--gh-text-muted);
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.faq-answer {
+  margin: 0;
+  padding: 0 1rem 1rem;
+  color: var(--gh-text-soft);
+  line-height: 1.55;
+}
+
+/* ---------- Footer ---------- */
+
 footer {
-  margin-top: 1.4rem;
-  border: 1px solid #1f2940;
-  border-radius: 1rem;
-  padding: 1rem;
-  color: #8ea6ce;
-  background: rgba(6, 12, 24, 0.8);
+  margin-top: 1.5rem;
+  border: 1px solid var(--gh-border);
+  border-radius: 0.75rem;
+  padding: 1rem 1.1rem;
+  color: var(--gh-text-muted);
+  background: var(--gh-surface);
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
 
 footer p {
@@ -312,10 +604,34 @@ footer p + p {
   margin-top: 0.55rem;
 }
 
+/* ---------- Responsive ---------- */
+
+@media (max-width: 960px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-content {
+    text-align: center;
+  }
+
+  .brand-row {
+    justify-content: center;
+  }
+
+  .hero-copy {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-illustration {
+    max-width: 280px;
+  }
+}
+
 @media (max-width: 900px) {
-  .countdown,
-  .tier-grid,
-  .schedule-grid {
+  .tier-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -326,16 +642,63 @@ footer p + p {
 
 @media (max-width: 620px) {
   .hero {
-    padding: 3.4rem 1rem;
+    padding: 2.25rem 1.1rem;
   }
 
-  .countdown,
-  .tier-grid,
-  .schedule-grid {
+  .countdown {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .tier-grid {
     grid-template-columns: 1fr;
+  }
+
+  .lineup-row {
+    grid-template-columns: 56px 1fr;
+    grid-template-areas:
+      'inning title'
+      'inning time';
+    gap: 0.25rem 0.9rem;
+  }
+
+  .inning {
+    grid-area: inning;
+  }
+
+  .lineup-time {
+    grid-area: time;
+    font-size: 0.82rem;
+  }
+
+  .lineup-title {
+    grid-area: title;
+  }
+
+  .cta {
+    width: 100%;
   }
 
   main {
     padding-inline: 0.75rem;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .cta,
+  .tier-card,
+  .signup-form button {
+    transition: none;
+  }
+
+  .cta:hover,
+  .tier-card:hover {
+    transform: none;
+  }
+
+  .countdown-tile .digits {
+    text-shadow: none;
   }
 }
