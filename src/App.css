@@ -51,7 +51,6 @@ main {
   height: 100%;
   object-fit: cover;
   object-position: center 38%;
-  transform: scale(1.02);
 }
 
 .hero-overlay {
@@ -449,7 +448,6 @@ footer p + p {
 
   .hero-bg-img {
     object-position: center center;
-    transform: none;
   }
 
   .lineup-row {

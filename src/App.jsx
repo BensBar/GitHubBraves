@@ -107,8 +107,8 @@ function App() {
         <img
           className="hero-bg-img"
           src={heroImg}
-          srcSet={`${heroImgMobile} 768w, ${heroImg} 1536w`}
-          sizes="(max-width: 768px) 100vw, 1200px"
+          srcSet={`${heroImgMobile} 640w, ${heroImg} 1536w`}
+          sizes="(max-width: 640px) 100vw, 1200px"
           alt=""
           aria-hidden="true"
           width="1536"
