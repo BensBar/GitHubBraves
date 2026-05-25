@@ -74,6 +74,16 @@ function App() {
 
   return (
     <main>
+      <div className="brand-row brand-row-top" aria-label="GitHub at Atlanta Braves">
+        <GitHubMark className="github-logo" />
+        <span className="brand-at" aria-hidden="true">at</span>
+        <img
+          className="braves-logo"
+          src="https://upload.wikimedia.org/wikipedia/en/f/f2/Atlanta_Braves.svg"
+          alt="Atlanta Braves logo"
+        />
+      </div>
+
       <header className="hero" aria-label="GitHub Day at Truist Park header">
         <img
           className="hero-bg-img"
@@ -92,15 +102,6 @@ function App() {
         <div className="hero-stitch" aria-hidden="true" />
 
         <div className="hero-content">
-          <div className="brand-row" aria-label="GitHub at Atlanta Braves">
-            <GitHubMark className="github-logo" />
-            <span className="brand-at" aria-hidden="true">at</span>
-            <img
-              className="braves-logo"
-              src="https://upload.wikimedia.org/wikipedia/en/f/f2/Atlanta_Braves.svg"
-              alt="Atlanta Braves logo"
-            />
-          </div>
           <h1>GitHub Day at Truist Park</h1>
           <p className="hero-copy">
             An invite-only customer event focused on AI-assisted development, platform engineering, and secure software delivery.
