@@ -5,14 +5,14 @@ import heroImgMobile from './assets/TruistGitHub-mobile.png'
 
 const GOOGLE_FORM_RESPONSE_URL =
   import.meta.env.VITE_GOOGLE_FORM_RESPONSE_URL ||
-  'https://docs.google.com/forms/d/e/1FAIpQLScRbvu5xP5CbtCZXnLBMrNwXR2u3KhlU0-TRA2zAF96PSpKXg/formResponse'
+  'https://docs.google.com/forms/d/e/1FAIpQLSeyiFqIKWUAkSRUCDdAFNOxhSs8qfuBQEyf7XK-UdsY8aMJsw/formResponse'
 
 const GOOGLE_FORM_ENTRY_IDS = {
-  first_name: 'entry.846954932',
-  last_name: 'entry.464429783',
-  company: 'entry.762119951',
-  email: 'entry.1587337554',
-  phone: 'entry.736072655',
+  first_name: 'entry.29048284',
+  last_name: 'entry.1640902461',
+  company: 'entry.487736331',
+  email: 'entry.855098151',
+  phone: 'entry.550226682',
 }
 
 const LINEUP = [
