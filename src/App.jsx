@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import heroImg from './assets/TruistGitHub.png'
 import heroImgMobile from './assets/TruistGitHub-mobile.png'
@@ -28,42 +28,13 @@ function GitHubMark({ className }) {
   )
 }
 
-function DiamondIcon() {
-  return (
-    <svg
-      className="diamond-icon"
-      viewBox="0 0 24 24"
-      width="18"
-      height="18"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path
-        d="M12 3 21 12l-9 9-9-9 9-9Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      <circle cx="12" cy="12" r="1.6" fill="currentColor" />
-    </svg>
-  )
-}
-
-
 function StitchDivider() {
   return <div className="stitch-divider" aria-hidden="true" />
 }
 
 function App() {
-  const signupRef = useRef(null)
   const [formStatus, setFormStatus] = useState('idle')
   const [formMessage, setFormMessage] = useState('')
-
-  function handleScrollToSignup(event) {
-    event.preventDefault()
-    signupRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -134,10 +105,6 @@ function App() {
           <p className="hero-copy">
             An invite-only customer event focused on AI-assisted development, platform engineering, and secure software delivery.
           </p>
-          <a href="#signup" className="cta" onClick={handleScrollToSignup}>
-            <DiamondIcon />
-            <span>Request Invitation</span>
-          </a>
         </div>
       </header>
 
@@ -154,7 +121,7 @@ function App() {
       <StitchDivider />
 
       <section className="schedule" aria-labelledby="schedule-heading">
-        <h2 id="schedule-heading">Tonight&apos;s Lineup</h2>
+        <h2 id="schedule-heading">What to Expect</h2>
         <ol className="lineup-list">
           {LINEUP.map((item) => (
             <li key={item.inning} className="lineup-row">
@@ -166,26 +133,17 @@ function App() {
         </ol>
       </section>
 
-      <section id="signup" ref={signupRef} className="signup" aria-labelledby="signup-heading">
-        <div className="signup-copy">
-          <h2 id="signup-heading">Reserve Your Seat</h2>
-          <p>Here&apos;s what to expect from the evening.</p>
-          <ul className="expect-list">
-            <li>A live GitHub product spotlight — Copilot, Actions, and what&apos;s next on the platform.</li>
-            <li>A customer community session to connect with peers building on GitHub.</li>
-            <li>Premium seating at Truist Park with a curated pregame experience.</li>
-            <li>Light fare and drinks during the networking hour.</li>
-          </ul>
-        </div>
+      <section id="signup" className="signup" aria-labelledby="signup-heading">
+        <h2 id="signup-heading">Reserve Your Seat</h2>
 
         {formStatus === 'success' ? (
           <div className="status-card success" role="status" aria-live="polite">
-            <h3>Invitation request received.</h3>
+            <h3>You&apos;re registered.</h3>
             <p>{formMessage}</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="signup-form" noValidate aria-busy={formStatus === 'submitting'}>
-            <input type="hidden" name="_subject" value="GitHub Night @ The Braves registration" />
+            <input type="hidden" name="_subject" value="GitHub Day at Truist Park registration" />
             <label className="trap" htmlFor="company-site">
               Company Site
               <input id="company-site" name="_gotcha" type="text" tabIndex="-1" autoComplete="off" />
@@ -211,7 +169,7 @@ function App() {
             )}
 
             <button type="submit" disabled={formStatus === 'submitting'}>
-              {formStatus === 'submitting' ? 'Submitting...' : 'Request Invitation'}
+              {formStatus === 'submitting' ? 'Submitting…' : 'Reserve Seat'}
             </button>
 
             {formMessage && <p className="status error">{formMessage}</p>}
