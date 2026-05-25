@@ -51,10 +51,19 @@ function App() {
       return
     }
 
+    const formData = new FormData(form)
+
+    if ((formData.get('_gotcha') ?? '').toString().trim() !== '') {
+      // Honeypot tripped — silently pretend success so bots don't retry.
+      form.reset()
+      setFormStatus('success')
+      setFormMessage('You are on the list. Watch for a confirmation email from the event team.')
+      return
+    }
+
     setFormStatus('submitting')
     setFormMessage('')
 
-    const formData = new FormData(form)
     const payload = new FormData()
     for (const [field, entryId] of Object.entries(GOOGLE_FORM_ENTRY_IDS)) {
       payload.append(entryId, formData.get(field) ?? '')
