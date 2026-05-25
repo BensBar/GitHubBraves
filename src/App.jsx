@@ -115,7 +115,7 @@ function App() {
         <div className="hero-stitch" aria-hidden="true" />
 
         <div className="hero-content">
-          <h1>GitHub Night at Truist Park</h1>
+          <h1 className="visually-hidden">GitHub Night at Truist Park</h1>
         </div>
       </header>
 
