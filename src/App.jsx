@@ -1,30 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 
-const EVENT_DATE = new Date('2026-06-18T23:00:00Z')
 const FORM_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/YOUR_FORM_ID'
 const DEFAULT_TURNSTILE_SITE_KEY = import.meta.env.PROD ? '' : '1x00000000000000000000AA'
 const TURNSTILE_SITE_KEY = (import.meta.env.VITE_TURNSTILE_SITE_KEY || DEFAULT_TURNSTILE_SITE_KEY).trim()
 const HIDE_TURNSTILE_IN_PROD = import.meta.env.VITE_HIDE_TURNSTILE_IN_PROD !== 'false'
 const SHOW_TURNSTILE = Boolean(TURNSTILE_SITE_KEY) && !(import.meta.env.PROD && HIDE_TURNSTILE_IN_PROD)
-
-const TIERS = [
-  {
-    name: 'Dugout Select',
-    seats: 'Front Row Club Access',
-    details: 'Executive networking lounge, private check-in, and premium game seating.',
-  },
-  {
-    name: 'Bullpen Social',
-    seats: 'Terrace Networking Deck',
-    details: 'Collaborative stadium tour, team demos, and social deck access through first pitch.',
-  },
-  {
-    name: 'Grandstand Crew',
-    seats: 'Classic Braves View',
-    details: 'Main event seating with complete pregame programming and giveaway bundle.',
-  },
-]
 
 const LINEUP = [
   { inning: '1st', time: '5:30 PM', title: 'Park' },
@@ -33,52 +14,6 @@ const LINEUP = [
   { inning: '4th', time: '6:15 PM', title: 'Customer Networking' },
   { inning: '5th', time: '7:15 PM', title: 'First Pitch' },
 ]
-
-const FAQS = [
-  {
-    q: 'Where do I park?',
-    a: 'Truist Park has multiple lots with prepaid options through MLB Ballpark. The Red Deck offers the closest access from the stadium entrance gates; allow extra time on weeknight games.',
-  },
-  {
-    q: 'Is there a dress code?',
-    a: 'Smart casual. The pregame programming is indoors and climate controlled, the game itself is open-air — a light layer for evening innings is a safe call.',
-  },
-  {
-    q: 'Can I transfer my registration?',
-    a: 'Yes. Email the event team with the original registrant and the new attendee details at least 48 hours before first pitch so we can update the badge list.',
-  },
-  {
-    q: 'What is the rain policy?',
-    a: 'Truist Park follows MLB weather protocol. The GitHub pregame programming runs rain or shine; the game itself follows the Braves announcement. We will email registrants if anything shifts.',
-  },
-]
-
-function getCountdown(now) {
-  const distance = EVENT_DATE.getTime() - now.getTime()
-
-  if (distance <= 0) {
-    return { days: '00', hours: '00', minutes: '00', seconds: '00' }
-  }
-
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24))
-  const hours = Math.floor((distance / (1000 * 60 * 60)) % 24)
-  const minutes = Math.floor((distance / (1000 * 60)) % 60)
-  const seconds = Math.floor((distance / 1000) % 60)
-
-  return {
-    days: String(days).padStart(2, '0'),
-    hours: String(hours).padStart(2, '0'),
-    minutes: String(minutes).padStart(2, '0'),
-    seconds: String(seconds).padStart(2, '0'),
-  }
-}
-
-const COUNTDOWN_LABELS = {
-  days: 'Days',
-  hours: 'Hrs',
-  minutes: 'Min',
-  seconds: 'Sec',
-}
 
 function GitHubMark({ className }) {
   return (
@@ -186,37 +121,9 @@ function StitchDivider() {
   return <div className="stitch-divider" aria-hidden="true" />
 }
 
-function FaqItem({ q, a }) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div className={`faq-item${open ? ' open' : ''}`}>
-      <button
-        type="button"
-        className="faq-question"
-        aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-      >
-        <span>{q}</span>
-        <span className="faq-toggle" aria-hidden="true">
-          {open ? '−' : '+'}
-        </span>
-      </button>
-      {open && <p className="faq-answer">{a}</p>}
-    </div>
-  )
-}
-
 function App() {
-  const [now, setNow] = useState(new Date())
   const [formStatus, setFormStatus] = useState('idle')
   const [formMessage, setFormMessage] = useState('')
-
-  const countdown = useMemo(() => getCountdown(now), [now])
-
-  useEffect(() => {
-    const timer = window.setInterval(() => setNow(new Date()), 1000)
-    return () => window.clearInterval(timer)
-  }, [])
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -299,34 +206,7 @@ function App() {
         <span><strong>Game</strong> Braves vs. Giants</span>
       </section>
 
-      <section className="scoreboard" aria-label="Countdown to first pitch">
-        <p className="scoreboard-label">First Pitch In</p>
-        <div className="countdown">
-          {Object.entries(countdown).map(([unit, value]) => (
-            <article key={unit} className="countdown-tile">
-              <span className="digits">{value}</span>
-              <small>{COUNTDOWN_LABELS[unit]}</small>
-            </article>
-          ))}
-        </div>
-      </section>
-
       <StitchDivider />
-
-      <section className="tiers" aria-labelledby="seat-tiers-heading">
-        <h2 id="seat-tiers-heading">Ticket Tiers</h2>
-        <div className="tier-grid">
-          {TIERS.map((tier) => (
-            <article key={tier.name} className="tier-card">
-              <p className="ticket-stub-label">Admit One</p>
-              <h3>{tier.name}</h3>
-              <p className="tier-subtitle">{tier.seats}</p>
-              <p className="tier-details">{tier.details}</p>
-              <div className="ticket-perf" aria-hidden="true"></div>
-            </article>
-          ))}
-        </div>
-      </section>
 
       <section className="schedule" aria-labelledby="schedule-heading">
         <h2 id="schedule-heading">Tonight&apos;s Lineup</h2>
@@ -369,9 +249,6 @@ function App() {
           <label htmlFor="organization">Organization (optional)</label>
           <input id="organization" name="organization" type="text" />
 
-          <label htmlFor="attendees">Attendee count (optional)</label>
-          <input id="attendees" name="attendees" type="number" min="1" max="8" placeholder="1" />
-
           <label htmlFor="dietary">Dietary requests (optional)</label>
           <textarea id="dietary" name="dietary" rows="2"></textarea>
 
@@ -395,15 +272,6 @@ function App() {
             <p className={formStatus === 'success' ? 'status success' : 'status error'}>{formMessage}</p>
           )}
         </form>
-      </section>
-
-      <section className="faq" aria-labelledby="faq-heading">
-        <h2 id="faq-heading">Game-Day FAQ</h2>
-        <div className="faq-list">
-          {FAQS.map((item) => (
-            <FaqItem key={item.q} q={item.q} a={item.a} />
-          ))}
-        </div>
       </section>
 
       <footer>

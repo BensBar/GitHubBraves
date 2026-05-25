@@ -18,10 +18,8 @@
   --braves-navy: #13274F;
   --braves-red: #CE1141;
 
-  /* Scoreboard amber */
+  /* Schedule amber */
   --scoreboard-amber: #ffb547;
-  --scoreboard-amber-dim: #5a3d10;
-  --scoreboard-bg: #0a0d0a;
 }
 
 main {
@@ -202,70 +200,6 @@ h1 {
   color: var(--gh-border);
 }
 
-/* ---------- Scoreboard countdown ---------- */
-
-.scoreboard {
-  margin-top: 1.5rem;
-  border: 1px solid var(--braves-navy);
-  border-radius: 1rem;
-  padding: 1.25rem;
-  background:
-    linear-gradient(180deg, rgba(19, 39, 79, 0.35), rgba(10, 13, 10, 0.95)),
-    var(--scoreboard-bg);
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.02);
-}
-
-.scoreboard-label {
-  margin: 0 0 0.75rem;
-  text-align: center;
-  color: var(--scoreboard-amber);
-  text-transform: uppercase;
-  letter-spacing: 0.3em;
-  font-size: 0.78rem;
-  font-weight: 700;
-}
-
-.countdown {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
-}
-
-.countdown-tile {
-  border: 1px solid #1a1d1a;
-  border-radius: 0.5rem;
-  padding: 0.9rem 0.5rem;
-  text-align: center;
-  background: var(--scoreboard-bg);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.03),
-    inset 0 0 24px rgba(255, 181, 71, 0.05);
-}
-
-.countdown-tile .digits {
-  display: block;
-  color: var(--scoreboard-amber);
-  font-family:
-    'DSEG7 Classic', 'Share Tech Mono', ui-monospace, 'SF Mono', Menlo,
-    Consolas, 'Liberation Mono', monospace;
-  font-size: clamp(1.6rem, 4vw, 2.8rem);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-shadow:
-    0 0 6px rgba(255, 181, 71, 0.55),
-    0 0 18px rgba(255, 181, 71, 0.25);
-}
-
-.countdown-tile small {
-  display: block;
-  margin-top: 0.35rem;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: var(--scoreboard-amber-dim);
-  font-size: 0.7rem;
-  font-weight: 700;
-}
-
 /* ---------- Stitch divider ---------- */
 
 .stitch-divider {
@@ -292,89 +226,13 @@ h2 {
   letter-spacing: -0.01em;
 }
 
-.tiers,
 .schedule,
-.signup,
-.faq {
+.signup {
   margin-top: 1.5rem;
   border: 1px solid var(--gh-border);
   border-radius: 1rem;
   padding: 1.5rem;
   background: var(--gh-surface);
-}
-
-.tier-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-/* ---------- Ticket-stub tier cards ---------- */
-
-.tier-card {
-  position: relative;
-  border: 1px solid var(--gh-border);
-  border-radius: 0.75rem;
-  padding: 1.1rem 1.1rem 1.5rem;
-  background:
-    radial-gradient(circle at 0% 50%, transparent 9px, var(--gh-surface-hi) 9px),
-    radial-gradient(circle at 100% 50%, transparent 9px, var(--gh-surface-hi) 9px);
-  background-size: 50% 100%;
-  background-position: left center, right center;
-  background-repeat: no-repeat;
-  transition: transform 0.15s ease, border-color 0.15s ease;
-}
-
-.tier-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--gh-purple);
-}
-
-.ticket-stub-label {
-  margin: 0 0 0.6rem;
-  color: var(--braves-red);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-}
-
-.tier-card h3 {
-  margin: 0 0 0.25rem;
-  color: var(--gh-text);
-  font-size: 1.15rem;
-}
-
-.tier-subtitle {
-  margin: 0 0 0.6rem;
-  color: var(--gh-text-muted);
-  font-weight: 600;
-  font-size: 0.88rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.tier-details {
-  margin: 0;
-  color: var(--gh-text-soft);
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-/* perforated tear line */
-.ticket-perf {
-  position: absolute;
-  left: 1rem;
-  right: 1rem;
-  bottom: 0.65rem;
-  height: 1px;
-  background-image: linear-gradient(
-    90deg,
-    var(--gh-border) 0 6px,
-    transparent 6px 12px
-  );
-  background-size: 12px 1px;
-  background-repeat: repeat-x;
 }
 
 /* ---------- Lineup card (schedule) ---------- */
@@ -530,59 +388,6 @@ h2 {
   left: -9999px;
 }
 
-/* ---------- FAQ accordion ---------- */
-
-.faq-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.faq-item {
-  border: 1px solid var(--gh-border-muted);
-  border-radius: 0.6rem;
-  background: var(--gh-surface-hi);
-  overflow: hidden;
-}
-
-.faq-item.open {
-  border-color: var(--gh-purple);
-}
-
-.faq-question {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.9rem 1rem;
-  background: transparent;
-  border: none;
-  color: var(--gh-text);
-  font: inherit;
-  font-weight: 600;
-  text-align: left;
-  cursor: pointer;
-}
-
-.faq-question:focus-visible {
-  outline: 2px solid var(--gh-purple);
-  outline-offset: -2px;
-}
-
-.faq-toggle {
-  color: var(--gh-text-muted);
-  font-size: 1.2rem;
-  line-height: 1;
-}
-
-.faq-answer {
-  margin: 0;
-  padding: 0 1rem 1rem;
-  color: var(--gh-text-soft);
-  line-height: 1.55;
-}
-
 /* ---------- Footer ---------- */
 
 footer {
@@ -631,10 +436,6 @@ footer p + p {
 }
 
 @media (max-width: 900px) {
-  .tier-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .signup {
     grid-template-columns: 1fr;
   }
@@ -643,15 +444,6 @@ footer p + p {
 @media (max-width: 620px) {
   .hero {
     padding: 2.25rem 1.1rem;
-  }
-
-  .countdown {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.4rem;
-  }
-
-  .tier-grid {
-    grid-template-columns: 1fr;
   }
 
   .lineup-row {
@@ -688,17 +480,11 @@ footer p + p {
 
 @media (prefers-reduced-motion: reduce) {
   .cta,
-  .tier-card,
   .signup-form button {
     transition: none;
   }
 
-  .cta:hover,
-  .tier-card:hover {
+  .cta:hover {
     transform: none;
-  }
-
-  .countdown-tile .digits {
-    text-shadow: none;
   }
 }
