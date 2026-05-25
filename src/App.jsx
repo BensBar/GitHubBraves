@@ -3,11 +3,17 @@ import './App.css'
 import heroImg from './assets/TruistGitHub.png'
 import heroImgMobile from './assets/TruistGitHub-mobile.png'
 
-const FORM_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/YOUR_FORM_ID'
-const DEFAULT_TURNSTILE_SITE_KEY = import.meta.env.PROD ? '' : '1x00000000000000000000AA'
-const TURNSTILE_SITE_KEY = (import.meta.env.VITE_TURNSTILE_SITE_KEY || DEFAULT_TURNSTILE_SITE_KEY).trim()
-const HIDE_TURNSTILE_IN_PROD = import.meta.env.VITE_HIDE_TURNSTILE_IN_PROD !== 'false'
-const SHOW_TURNSTILE = Boolean(TURNSTILE_SITE_KEY) && !(import.meta.env.PROD && HIDE_TURNSTILE_IN_PROD)
+const GOOGLE_FORM_RESPONSE_URL =
+  import.meta.env.VITE_GOOGLE_FORM_RESPONSE_URL ||
+  'https://docs.google.com/forms/d/e/1FAIpQLScRbvu5xP5CbtCZXnLBMrNwXR2u3KhlU0-TRA2zAF96PSpKXg/formResponse'
+
+const GOOGLE_FORM_ENTRY_IDS = {
+  first_name: 'entry.846954932',
+  last_name: 'entry.464429783',
+  company: 'entry.762119951',
+  email: 'entry.1587337554',
+  phone: 'entry.736072655',
+}
 
 const LINEUP = [
   { inning: '1st', time: '5:30 PM', title: 'Park' },
@@ -39,29 +45,21 @@ function App() {
   async function handleSubmit(event) {
     event.preventDefault()
 
-    if (FORM_ENDPOINT.includes('YOUR_FORM_ID')) {
-      setFormStatus('error')
-      setFormMessage('Set the VITE_FORMSPREE_ENDPOINT environment variable with your live Formspree form URL before launch.')
-      return
-    }
-
     setFormStatus('submitting')
     setFormMessage('')
 
     const formData = new FormData(event.currentTarget)
+    const payload = new FormData()
+    for (const [field, entryId] of Object.entries(GOOGLE_FORM_ENTRY_IDS)) {
+      payload.append(entryId, formData.get(field) ?? '')
+    }
 
     try {
-      const response = await fetch(FORM_ENDPOINT, {
+      await fetch(GOOGLE_FORM_RESPONSE_URL, {
         method: 'POST',
-        headers: {
-          Accept: 'application/json',
-        },
-        body: formData,
+        mode: 'no-cors',
+        body: payload,
       })
-
-      if (!response.ok) {
-        throw new Error('Registration failed')
-      }
 
       event.currentTarget.reset()
       setFormStatus('success')
@@ -144,7 +142,6 @@ function App() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="signup-form" noValidate aria-busy={formStatus === 'submitting'}>
-            <input type="hidden" name="_subject" value="GitHub Day at Truist Park registration" />
             <label className="trap" htmlFor="company-site">
               Company Site
               <input id="company-site" name="_gotcha" type="text" tabIndex="-1" autoComplete="off" />
@@ -165,10 +162,6 @@ function App() {
             <label htmlFor="phone">Phone Number</label>
             <input id="phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" required />
 
-            {SHOW_TURNSTILE && (
-              <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="dark"></div>
-            )}
-
             <button type="submit" disabled={formStatus === 'submitting'}>
               {formStatus === 'submitting' ? 'Submitting…' : 'Reserve Seat'}
             </button>
@@ -185,9 +178,10 @@ function App() {
           for production use.
         </p>
         <p>
-          Registration is processed by an external Formspree backend over HTTPS, with
-          Cloudflare Turnstile bot defense. Customer data is stored outside this GitHub
-          Pages repository — review your provider privacy terms before launch.
+          Registration submissions are sent directly to a Google Form owned by
+          the event team. Customer data is stored in Google Sheets/Forms outside
+          this GitHub Pages repository — review Google&apos;s privacy terms
+          before launch.
         </p>
       </footer>
     </main>

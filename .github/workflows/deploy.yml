@@ -33,8 +33,7 @@ jobs:
 
       - name: Build
         env:
-          VITE_FORMSPREE_ENDPOINT: ${{ secrets.VITE_FORMSPREE_ENDPOINT }}
-          VITE_TURNSTILE_SITE_KEY: ${{ secrets.VITE_TURNSTILE_SITE_KEY }}
+          VITE_GOOGLE_FORM_RESPONSE_URL: ${{ secrets.VITE_GOOGLE_FORM_RESPONSE_URL }}
         run: npm run build
 
       - name: Upload Pages artifact

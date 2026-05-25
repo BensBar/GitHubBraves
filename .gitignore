@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local Google Apps Script project used to provision the Google Form
+.apps-script-form/
+.clasp.json
+.clasprc.json
