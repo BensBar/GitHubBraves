@@ -45,10 +45,16 @@ function App() {
   async function handleSubmit(event) {
     event.preventDefault()
 
+    const form = event.currentTarget
+    if (!form.checkValidity()) {
+      form.reportValidity()
+      return
+    }
+
     setFormStatus('submitting')
     setFormMessage('')
 
-    const formData = new FormData(event.currentTarget)
+    const formData = new FormData(form)
     const payload = new FormData()
     for (const [field, entryId] of Object.entries(GOOGLE_FORM_ENTRY_IDS)) {
       payload.append(entryId, formData.get(field) ?? '')
@@ -61,7 +67,7 @@ function App() {
         body: payload,
       })
 
-      event.currentTarget.reset()
+      form.reset()
       setFormStatus('success')
       setFormMessage('You are on the list. Watch for a confirmation email from the event team.')
     } catch {
@@ -157,10 +163,28 @@ function App() {
             <input id="company" name="company" type="text" autoComplete="organization" required />
 
             <label htmlFor="email">Work Email</label>
-            <input id="email" name="email" type="email" inputMode="email" autoComplete="email" required />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+              title="Enter a valid email address, for example name@example.com"
+              required
+            />
 
             <label htmlFor="phone">Phone Number</label>
-            <input id="phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" required />
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              pattern="^[+]?[\s\-().]*([0-9][\s\-().]*){10,15}$"
+              title="Enter a phone number with 10–15 digits. Spaces, dashes, parentheses, and a leading + are allowed."
+              required
+            />
 
             <button type="submit" disabled={formStatus === 'submitting'}>
               {formStatus === 'submitting' ? 'Submitting…' : 'Reserve Seat'}
