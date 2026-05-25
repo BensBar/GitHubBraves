@@ -95,14 +95,12 @@ main {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1.25rem;
 }
 
 .brand-row-top {
   align-self: flex-start;
-  margin-bottom: 0;
-  position: relative;
-  z-index: 2;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
 }
 
 .github-logo {
