@@ -15,9 +15,11 @@ const GOOGLE_FORM_ENTRY_IDS = {
   phone: 'entry.1859374818',
 }
 
+const REGISTRATION_OPEN = true
+
 const LINEUP = [
   { inning: '1st', time: '5:30 PM', title: 'Park' },
-  { inning: '2nd', time: '5:45 PM', title: 'Meet up at The Battery (spot TBD)' },
+  { inning: '2nd', time: '5:45 PM', title: 'Meet up at The Battery — details to follow' },
   { inning: '3rd', time: '6:00 PM', title: 'GitHub Greeting' },
   { inning: '4th', time: '6:15 PM', title: 'Customer Networking' },
   { inning: '5th', time: '7:15 PM', title: 'First Pitch' },
@@ -57,7 +59,7 @@ function App() {
       // Honeypot tripped — silently pretend success so bots don't retry.
       form.reset()
       setFormStatus('success')
-      setFormMessage('You are on the list. Watch for a confirmation email from the event team.')
+      setFormMessage("You're on the list! The event team will be in touch with details closer to June 18.")
       return
     }
 
@@ -78,7 +80,7 @@ function App() {
 
       form.reset()
       setFormStatus('success')
-      setFormMessage('You are on the list. Watch for a confirmation email from the event team.')
+      setFormMessage("You're on the list! The event team will be in touch with details closer to June 18.")
     } catch {
       setFormStatus('error')
       setFormMessage('We could not submit your registration. Please try again in a minute.')
@@ -92,7 +94,7 @@ function App() {
         <span className="brand-at" aria-hidden="true">at</span>
         <img
           className="braves-logo"
-          src="https://upload.wikimedia.org/wikipedia/en/f/f2/Atlanta_Braves.svg"
+          src="/assets/braves-logo.svg"
           alt="Atlanta Braves logo"
         />
       </div>
@@ -147,72 +149,68 @@ function App() {
       <section id="signup" className="signup" aria-labelledby="signup-heading">
         <h2 id="signup-heading">Reserve Your Seat</h2>
 
-        {formStatus === 'success' ? (
-          <div className="status-card success" role="status" aria-live="polite">
-            <h3>You&apos;re registered.</h3>
-            <p>{formMessage}</p>
-          </div>
+        {REGISTRATION_OPEN ? (
+          formStatus === 'success' ? (
+            <div className="status-card success" role="status" aria-live="polite">
+              <h3>You&apos;re registered.</h3>
+              <p>{formMessage}</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="signup-form" noValidate aria-busy={formStatus === 'submitting'}>
+              <label className="trap" htmlFor="company-site">
+                Company Site
+                <input id="company-site" name="_gotcha" type="text" tabIndex="-1" autoComplete="off" />
+              </label>
+
+              <label htmlFor="first_name">First Name</label>
+              <input id="first_name" name="first_name" type="text" autoComplete="given-name" required />
+
+              <label htmlFor="last_name">Last Name</label>
+              <input id="last_name" name="last_name" type="text" autoComplete="family-name" required />
+
+              <label htmlFor="company">Company</label>
+              <input id="company" name="company" type="text" autoComplete="organization" required />
+
+              <label htmlFor="email">Work Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                title="Enter a valid email address, for example name@example.com"
+                required
+              />
+
+              <label htmlFor="phone">Phone Number</label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                pattern="^[+]?[\s\-().]*([0-9][\s\-().]*){10,15}$"
+                title="Enter a phone number with 10–15 digits. Spaces, dashes, parentheses, and a leading + are allowed."
+                required
+              />
+
+              <button type="submit" disabled={formStatus === 'submitting'}>
+                {formStatus === 'submitting' ? 'Submitting…' : 'Reserve Seat'}
+              </button>
+
+              {formMessage && <p className="status error">{formMessage}</p>}
+            </form>
+          )
         ) : (
-          <form onSubmit={handleSubmit} className="signup-form" noValidate aria-busy={formStatus === 'submitting'}>
-            <label className="trap" htmlFor="company-site">
-              Company Site
-              <input id="company-site" name="_gotcha" type="text" tabIndex="-1" autoComplete="off" />
-            </label>
-
-            <label htmlFor="first_name">First Name</label>
-            <input id="first_name" name="first_name" type="text" autoComplete="given-name" required />
-
-            <label htmlFor="last_name">Last Name</label>
-            <input id="last_name" name="last_name" type="text" autoComplete="family-name" required />
-
-            <label htmlFor="company">Company</label>
-            <input id="company" name="company" type="text" autoComplete="organization" required />
-
-            <label htmlFor="email">Work Email</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              inputMode="email"
-              autoComplete="email"
-              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-              title="Enter a valid email address, for example name@example.com"
-              required
-            />
-
-            <label htmlFor="phone">Phone Number</label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              inputMode="tel"
-              autoComplete="tel"
-              pattern="^[+]?[\s\-().]*([0-9][\s\-().]*){10,15}$"
-              title="Enter a phone number with 10–15 digits. Spaces, dashes, parentheses, and a leading + are allowed."
-              required
-            />
-
-            <button type="submit" disabled={formStatus === 'submitting'}>
-              {formStatus === 'submitting' ? 'Submitting…' : 'Reserve Seat'}
-            </button>
-
-            {formMessage && <p className="status error">{formMessage}</p>}
-          </form>
+          <div className="status-card" role="status" aria-live="polite">
+            <p>Registration is currently closed. Contact your GitHub account team for assistance.</p>
+          </div>
         )}
       </section>
 
       <footer>
-        <p>
-          GitHub and the GitHub logo are trademarks of GitHub, Inc. Atlanta Braves marks
-          are property of Braves Holdings, LLC and require proper licensing permission
-          for production use.
-        </p>
-        <p>
-          Registration submissions are sent directly to a Google Form owned by
-          the event team. Customer data is stored in Google Sheets/Forms outside
-          this GitHub Pages repository — review Google&apos;s privacy terms
-          before launch.
-        </p>
+        <p>GitHub and the GitHub logo are trademarks of GitHub, Inc.; Atlanta Braves marks are property of Braves Holdings, LLC.</p>
       </footer>
     </main>
   )
