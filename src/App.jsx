@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import heroImg from './assets/hero.png'
 
 const FORM_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/YOUR_FORM_ID'
 const DEFAULT_TURNSTILE_SITE_KEY = import.meta.env.PROD ? '' : '1x00000000000000000000AA'
@@ -48,74 +49,6 @@ function DiamondIcon() {
   )
 }
 
-function HeroIllustration() {
-  // Stylized ballpark + baseball-with-Octocat-seam motif. Inline, lightweight, recolorable.
-  return (
-    <svg
-      className="hero-illustration"
-      viewBox="0 0 320 260"
-      role="img"
-      aria-label="Stylized ballpark skyline with a baseball"
-    >
-      <defs>
-        <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="#13274F" />
-          <stop offset="100%" stopColor="#0d1117" />
-        </linearGradient>
-        <radialGradient id="moon" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#f6f8fa" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#f6f8fa" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-
-      {/* sky panel */}
-      <rect x="0" y="0" width="320" height="200" rx="14" fill="url(#sky)" />
-      {/* stadium light glow */}
-      <circle cx="250" cy="60" r="55" fill="url(#moon)" />
-
-      {/* stadium silhouette */}
-      <path
-        d="M0 200 L0 160 Q30 120 60 150 L80 130 Q110 100 140 130 L160 110 Q190 90 220 115 L240 130 Q270 110 300 140 L320 160 L320 200 Z"
-        fill="#161b22"
-        stroke="#30363d"
-        strokeWidth="1"
-      />
-      {/* light poles */}
-      <g stroke="#8b949e" strokeWidth="1.2">
-        <line x1="60" y1="150" x2="60" y2="125" />
-        <line x1="160" y1="110" x2="160" y2="80" />
-        <line x1="260" y1="120" x2="260" y2="90" />
-      </g>
-      <g fill="#ffd866">
-        <rect x="52" y="118" width="16" height="8" rx="1.5" />
-        <rect x="152" y="73" width="16" height="8" rx="1.5" />
-        <rect x="252" y="83" width="16" height="8" rx="1.5" />
-      </g>
-
-      {/* foreground baseball with Octocat-style seam */}
-      <g transform="translate(160 210)">
-        <circle r="44" fill="#f6f8fa" stroke="#30363d" strokeWidth="1.5" />
-        {/* red stitching seams */}
-        <path
-          d="M-32 -20 Q0 -4 32 -20"
-          fill="none"
-          stroke="#CE1141"
-          strokeWidth="2"
-          strokeDasharray="3 4"
-          strokeLinecap="round"
-        />
-        <path
-          d="M-32 20 Q0 4 32 20"
-          fill="none"
-          stroke="#CE1141"
-          strokeWidth="2"
-          strokeDasharray="3 4"
-          strokeLinecap="round"
-        />
-      </g>
-    </svg>
-  )
-}
 
 function StitchDivider() {
   return <div className="stitch-divider" aria-hidden="true" />
@@ -163,36 +96,37 @@ function App() {
 
   return (
     <main>
-      <header className="hero" aria-label="GitHub Night at the Braves header">
-        <div className="hero-vignette" aria-hidden="true"></div>
-        <div className="hero-stitch" aria-hidden="true"></div>
+      <header className="hero" aria-label="GitHub Day at Truist Park header">
+        <img
+          className="hero-bg-img"
+          src={heroImg}
+          alt=""
+          aria-hidden="true"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+        />
+        <div className="hero-overlay" aria-hidden="true" />
+        <div className="hero-stitch" aria-hidden="true" />
 
-        <div className="hero-grid">
-          <div className="hero-content">
-            <div className="brand-row" aria-label="GitHub at Atlanta Braves">
-              <GitHubMark className="github-logo" />
-              <span className="brand-at" aria-hidden="true">at</span>
-              <img
-                className="braves-logo"
-                src="https://upload.wikimedia.org/wikipedia/en/f/f2/Atlanta_Braves.svg"
-                alt="Atlanta Braves logo"
-              />
-            </div>
-            <p className="eyebrow">An evening with GitHub at Truist Park</p>
-            <h1>GitHub Night @ The Braves</h1>
-            <p className="hero-copy">
-              Spend a night with the GitHub team — a live look at Copilot and the GitHub
-              platform, a customer community session with peers building on it, and
-              Braves baseball under the lights to close it out.
-            </p>
-            <a href="#signup" className="cta">
-              <DiamondIcon />
-              <span>Register Now</span>
-            </a>
+        <div className="hero-content">
+          <div className="brand-row" aria-label="GitHub at Atlanta Braves">
+            <GitHubMark className="github-logo" />
+            <span className="brand-at" aria-hidden="true">at</span>
+            <img
+              className="braves-logo"
+              src="https://upload.wikimedia.org/wikipedia/en/f/f2/Atlanta_Braves.svg"
+              alt="Atlanta Braves logo"
+            />
           </div>
-          <div className="hero-art" aria-hidden="true">
-            <HeroIllustration />
-          </div>
+          <h1>GitHub Day at Truist Park</h1>
+          <p className="hero-copy">
+            An invite-only customer event focused on AI-assisted development, platform engineering, and secure software delivery.
+          </p>
+          <a href="#signup" className="cta">
+            <DiamondIcon />
+            <span>Request Invitation</span>
+          </a>
         </div>
       </header>
 
