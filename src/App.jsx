@@ -1,29 +1,10 @@
-import { useState } from 'react'
 import './App.css'
 import heroImg from './assets/TruistGitHub.png'
 import heroImgMobile from './assets/TruistGitHub-mobile.png'
 
-const GOOGLE_FORM_RESPONSE_URL =
+const REQUEST_ACCESS_URL =
   import.meta.env.VITE_GOOGLE_FORM_RESPONSE_URL ||
   'https://docs.google.com/forms/d/e/1FAIpQLSeyiFqIKWUAkSRUCDdAFNOxhSs8qfuBQEyf7XK-UdsY8aMJsw/formResponse'
-
-const GOOGLE_FORM_ENTRY_IDS = {
-  first_name: 'entry.878299649',
-  last_name: 'entry.1345233437',
-  company: 'entry.2100624345',
-  email: 'entry.2119109114',
-  phone: 'entry.1859374818',
-}
-
-const REGISTRATION_OPEN = true
-
-const LINEUP = [
-  { inning: '1st', time: '5:30 PM', title: 'Park' },
-  { inning: '2nd', time: '5:45 PM', title: 'Meet up at The Battery — details to follow' },
-  { inning: '3rd', time: '6:00 PM', title: 'GitHub Greeting' },
-  { inning: '4th', time: '6:15 PM', title: 'Customer Networking' },
-  { inning: '5th', time: '7:15 PM', title: 'First Pitch' },
-]
 
 function GitHubMark({ className }) {
   return (
@@ -36,62 +17,14 @@ function GitHubMark({ className }) {
   )
 }
 
-function StitchDivider() {
-  return <div className="stitch-divider" aria-hidden="true" />
-}
-
 function App() {
-  const [formStatus, setFormStatus] = useState('idle')
-  const [formMessage, setFormMessage] = useState('')
-
-  async function handleSubmit(event) {
-    event.preventDefault()
-
-    const form = event.currentTarget
-    if (!form.checkValidity()) {
-      form.reportValidity()
-      return
-    }
-
-    const formData = new FormData(form)
-
-    if ((formData.get('_gotcha') ?? '').toString().trim() !== '') {
-      // Honeypot tripped — silently pretend success so bots don't retry.
-      form.reset()
-      setFormStatus('success')
-      setFormMessage("You're on the list! The event team will be in touch with details closer to June 18.")
-      return
-    }
-
-    setFormStatus('submitting')
-    setFormMessage('')
-
-    const payload = new FormData()
-    for (const [field, entryId] of Object.entries(GOOGLE_FORM_ENTRY_IDS)) {
-      payload.append(entryId, formData.get(field) ?? '')
-    }
-
-    try {
-      await fetch(GOOGLE_FORM_RESPONSE_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: payload,
-      })
-
-      form.reset()
-      setFormStatus('success')
-      setFormMessage("You're on the list! The event team will be in touch with details closer to June 18.")
-    } catch {
-      setFormStatus('error')
-      setFormMessage('We could not submit your registration. Please try again in a minute.')
-    }
-  }
+  const requestAccessUrl = REQUEST_ACCESS_URL.replace('/formResponse', '/viewform')
 
   return (
     <main>
-      <div className="brand-row brand-row-top" aria-label="GitHub at Atlanta Braves">
+      <div className="brand-row brand-row-top" aria-label="GitHub and Atlanta Braves">
         <GitHubMark className="github-logo" />
-        <span className="brand-at" aria-hidden="true">at</span>
+        <span className="brand-lockup">GitHub × Braves</span>
         <img
           className="braves-logo"
           src="/assets/braves-logo.svg"
@@ -114,99 +47,50 @@ function App() {
           decoding="async"
         />
         <div className="hero-overlay" aria-hidden="true" />
-        <div className="hero-stitch" aria-hidden="true" />
 
         <div className="hero-content">
-          <h1 className="visually-hidden">GitHub Night at Truist Park</h1>
+          <div className="hero-card">
+            <p className="hero-kicker">June 18, 2026 · Truist Park</p>
+            <h1>GitHub at Truist Park</h1>
+            <p className="hero-copy">An exclusive Atlanta Braves night for enterprise customers and engineering leaders.</p>
+          </div>
         </div>
       </header>
 
-      <section className="stat-strip" aria-label="Event details">
-        <span><strong>Hosted by</strong> GitHub</span>
-        <span aria-hidden="true" className="stat-dot">·</span>
-        <span><strong>Venue</strong> Truist Park</span>
-        <span aria-hidden="true" className="stat-dot">·</span>
-        <span><strong>Date</strong> June 18, 2026</span>
-        <span aria-hidden="true" className="stat-dot">·</span>
-        <span><strong>Game</strong> Braves vs. Giants</span>
+      <section className="event-headline" aria-label="Event focus">
+        <h2>AI-Powered Development at Enterprise Scale</h2>
+        <p>
+          Join GitHub at Truist Park for an exclusive customer experience focused on Copilot, automation, and modern software delivery.
+        </p>
       </section>
 
-      <StitchDivider />
-
-      <section className="schedule" aria-labelledby="schedule-heading">
-        <h2 id="schedule-heading">What to Expect</h2>
-        <ol className="lineup-list">
-          {LINEUP.map((item) => (
-            <li key={item.inning} className="lineup-row">
-              <span className="inning" aria-label={`${item.inning} inning`}>{item.inning}</span>
-              <span className="lineup-time">{item.time}</span>
-              <span className="lineup-title">{item.title}</span>
-            </li>
-          ))}
-        </ol>
+      <section className="metadata-grid" aria-label="Event details">
+        <article className="metadata-card">
+          <span className="metadata-label">Hosted By</span>
+          <p>GitHub</p>
+        </article>
+        <article className="metadata-card">
+          <span className="metadata-label">Venue</span>
+          <p>Truist Park</p>
+        </article>
+        <article className="metadata-card">
+          <span className="metadata-label">Date</span>
+          <p>June 18, 2026</p>
+        </article>
+        <article className="metadata-card">
+          <span className="metadata-label">Matchup</span>
+          <p>Braves vs Giants</p>
+        </article>
       </section>
 
-      <section id="signup" className="signup" aria-labelledby="signup-heading">
-        <h2 id="signup-heading">Reserve Your Seat</h2>
+      <div className="glow-divider" aria-hidden="true" />
 
-        {REGISTRATION_OPEN ? (
-          formStatus === 'success' ? (
-            <div className="status-card success" role="status" aria-live="polite">
-              <h3>You&apos;re registered.</h3>
-              <p>{formMessage}</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="signup-form" noValidate aria-busy={formStatus === 'submitting'}>
-              <label className="trap" htmlFor="company-site">
-                Company Site
-                <input id="company-site" name="_gotcha" type="text" tabIndex="-1" autoComplete="off" />
-              </label>
-
-              <label htmlFor="first_name">First Name</label>
-              <input id="first_name" name="first_name" type="text" autoComplete="given-name" required />
-
-              <label htmlFor="last_name">Last Name</label>
-              <input id="last_name" name="last_name" type="text" autoComplete="family-name" required />
-
-              <label htmlFor="company">Company</label>
-              <input id="company" name="company" type="text" autoComplete="organization" required />
-
-              <label htmlFor="email">Work Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                inputMode="email"
-                autoComplete="email"
-                pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-                title="Enter a valid email address, for example name@example.com"
-                required
-              />
-
-              <label htmlFor="phone">Phone Number</label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                inputMode="tel"
-                autoComplete="tel"
-                pattern="^[+]?[\s\-().]*([0-9][\s\-().]*){10,15}$"
-                title="Enter a phone number with 10–15 digits. Spaces, dashes, parentheses, and a leading + are allowed."
-                required
-              />
-
-              <button type="submit" disabled={formStatus === 'submitting'}>
-                {formStatus === 'submitting' ? 'Submitting…' : 'Reserve Seat'}
-              </button>
-
-              {formMessage && <p className="status error">{formMessage}</p>}
-            </form>
-          )
-        ) : (
-          <div className="status-card" role="status" aria-live="polite">
-            <p>Registration is currently closed. Contact your GitHub account team for assistance.</p>
-          </div>
-        )}
+      <section id="signup" className="invitation" aria-labelledby="signup-heading">
+        <h2 id="signup-heading">Request an Invitation</h2>
+        <p>Space is limited for this customer event.</p>
+        <a className="cta-button" href={requestAccessUrl} target="_blank" rel="noreferrer">
+          Request Access
+        </a>
       </section>
 
       <footer>
