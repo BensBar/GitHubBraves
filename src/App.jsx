@@ -3,7 +3,8 @@ import './App.css'
 
 const EVENT_DATE = new Date('2026-06-18T23:00:00Z')
 const FORM_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/YOUR_FORM_ID'
-const TURNSTILE_SITE_KEY = (import.meta.env.VITE_TURNSTILE_SITE_KEY || '').trim()
+const DEFAULT_TURNSTILE_SITE_KEY = import.meta.env.PROD ? '' : '1x00000000000000000000AA'
+const TURNSTILE_SITE_KEY = (import.meta.env.VITE_TURNSTILE_SITE_KEY || DEFAULT_TURNSTILE_SITE_KEY).trim()
 const HIDE_TURNSTILE_IN_PROD = import.meta.env.VITE_HIDE_TURNSTILE_IN_PROD !== 'false'
 const SHOW_TURNSTILE = Boolean(TURNSTILE_SITE_KEY) && !(import.meta.env.PROD && HIDE_TURNSTILE_IN_PROD)
 
