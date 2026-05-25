@@ -39,7 +39,7 @@ main {
   min-height: clamp(520px, 68vh, 780px);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 2rem 2.5rem 2.75rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
 }
@@ -101,6 +101,8 @@ main {
 .brand-row-top {
   align-self: flex-start;
   margin-bottom: 0;
+  position: relative;
+  z-index: 2;
 }
 
 .github-logo {
