@@ -87,7 +87,7 @@ function App() {
 
   return (
     <main>
-      <header className="hero" aria-label="GitHub Evening at Truist Park header">
+      <header className="hero" aria-label="GitHub Night at Truist Park header">
         <img
           className="hero-bg-img"
           src={heroImg}
@@ -115,7 +115,7 @@ function App() {
         </div>
 
         <div className="hero-content">
-          <h1>GitHub Evening at Truist Park</h1>
+          <h1>GitHub Night at Truist Park</h1>
         </div>
       </header>
 
