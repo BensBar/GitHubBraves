@@ -102,7 +102,7 @@ main > * {
   object-position: center 38%;
   filter: saturate(0.88) contrast(1.08) brightness(0.82) drop-shadow(0 0 28px rgba(0, 0, 0, 0.35));
   transform: scale(1.02);
-  animation: slow-zoom 26s ease-in-out infinite alternate;
+  animation: slow-zoom 32s ease-out 1 forwards;
 }
 
 .hero-overlay {
