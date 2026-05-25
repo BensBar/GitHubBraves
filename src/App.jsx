@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import './App.css'
 import heroImg from './assets/TruistGitHub.png'
+import heroImgMobile from './assets/TruistGitHub-mobile.png'
 
 const FORM_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/YOUR_FORM_ID'
 const DEFAULT_TURNSTILE_SITE_KEY = import.meta.env.PROD ? '' : '1x00000000000000000000AA'
@@ -106,8 +107,12 @@ function App() {
         <img
           className="hero-bg-img"
           src={heroImg}
+          srcSet={`${heroImgMobile} 768w, ${heroImg} 1536w`}
+          sizes="(max-width: 768px) 100vw, 1200px"
           alt=""
           aria-hidden="true"
+          width="1536"
+          height="1024"
           loading="eager"
           fetchPriority="high"
           decoding="async"
