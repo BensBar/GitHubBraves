@@ -3,7 +3,10 @@ import './App.css'
 
 const EVENT_DATE = new Date('2026-06-18T23:00:00Z')
 const FORM_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/YOUR_FORM_ID'
-const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'
+const DEFAULT_TURNSTILE_SITE_KEY = import.meta.env.PROD ? '' : '1x00000000000000000000AA'
+const TURNSTILE_SITE_KEY = (import.meta.env.VITE_TURNSTILE_SITE_KEY || DEFAULT_TURNSTILE_SITE_KEY).trim()
+const HIDE_TURNSTILE_IN_PROD = import.meta.env.VITE_HIDE_TURNSTILE_IN_PROD !== 'false'
+const SHOW_TURNSTILE = Boolean(TURNSTILE_SITE_KEY) && !(import.meta.env.PROD && HIDE_TURNSTILE_IN_PROD)
 
 const TIERS = [
   {
@@ -24,10 +27,11 @@ const TIERS = [
 ]
 
 const LINEUP = [
-  { inning: '1st', time: '4:30 PM', title: 'Arrival + Ballpark Entry' },
-  { inning: '2nd', time: '5:00 PM', title: 'GitHub Product Spotlight' },
-  { inning: '3rd', time: '5:40 PM', title: 'Customer Networking Session' },
-  { inning: '4th', time: '6:30 PM', title: 'Braves First Pitch Experience' },
+  { inning: '1st', time: '5:30 PM', title: 'Park' },
+  { inning: '2nd', time: '5:45 PM', title: 'Meet up at The Battery (spot TBD)' },
+  { inning: '3rd', time: '6:00 PM', title: 'GitHub Greeting' },
+  { inning: '4th', time: '6:15 PM', title: 'Customer Networking' },
+  { inning: '5th', time: '7:15 PM', title: 'First Pitch' },
 ]
 
 const FAQS = [
@@ -379,7 +383,9 @@ function App() {
             I agree to event registration processing and follow-up confirmation email.
           </label>
 
-          <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="dark"></div>
+          {SHOW_TURNSTILE && (
+            <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="dark"></div>
+          )}
 
           <button type="submit" disabled={formStatus === 'submitting'}>
             {formStatus === 'submitting' ? 'Submitting...' : 'Complete Registration'}
