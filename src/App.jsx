@@ -24,10 +24,11 @@ const TIERS = [
 ]
 
 const LINEUP = [
-  { inning: '1st', time: '4:30 PM', title: 'Arrival + Ballpark Entry' },
-  { inning: '2nd', time: '5:00 PM', title: 'GitHub Product Spotlight' },
-  { inning: '3rd', time: '5:40 PM', title: 'Customer Networking Session' },
-  { inning: '4th', time: '6:30 PM', title: 'Braves First Pitch Experience' },
+  { inning: '1st', time: '5:30 PM', title: 'Ballpark Entry' },
+  { inning: '2nd', time: '5:45 PM', title: 'Meet up at The Battery (spot TBD)' },
+  { inning: '3rd', time: '6:00 PM', title: 'GitHub Greeting' },
+  { inning: '4th', time: '6:15 PM', title: 'Customer Networking' },
+  { inning: '5th', time: '7:15 PM', title: 'First Pitch' },
 ]
 
 const FAQS = [
