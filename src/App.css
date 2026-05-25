@@ -273,6 +273,23 @@ h2 {
   font-weight: 500;
 }
 
+.request-access-btn {
+  display: inline-block;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--braves-red);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.request-access-btn:hover {
+  background: #a80d34;
+}
+
 /* ---------- Signup ---------- */
 
 .signup {

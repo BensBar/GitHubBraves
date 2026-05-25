@@ -41,6 +41,7 @@ function StitchDivider() {
 }
 
 function App() {
+  const [formOpen, setFormOpen] = useState(false)
   const [formStatus, setFormStatus] = useState('idle')
   const [formMessage, setFormMessage] = useState('')
 
@@ -59,7 +60,7 @@ function App() {
       // Honeypot tripped — silently pretend success so bots don't retry.
       form.reset()
       setFormStatus('success')
-      setFormMessage("You're on the list! The event team will be in touch with details closer to June 18.")
+      setFormMessage('')
       return
     }
 
@@ -80,7 +81,7 @@ function App() {
 
       form.reset()
       setFormStatus('success')
-      setFormMessage("You're on the list! The event team will be in touch with details closer to June 18.")
+      setFormMessage('')
     } catch {
       setFormStatus('error')
       setFormMessage('We could not submit your registration. Please try again in a minute.')
@@ -152,11 +153,17 @@ function App() {
         {REGISTRATION_OPEN ? (
           formStatus === 'success' ? (
             <div className="status-card success" role="status" aria-live="polite">
-              <h3>You&apos;re registered.</h3>
-              <p>{formMessage}</p>
+              <h3>Thank you for registering.</h3>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="signup-form" noValidate aria-busy={formStatus === 'submitting'}>
+            <>
+              {!formOpen && (
+                <button className="request-access-btn" onClick={() => setFormOpen(true)}>
+                  Request Access
+                </button>
+              )}
+              {formOpen && (
+                <form onSubmit={handleSubmit} className="signup-form" noValidate aria-busy={formStatus === 'submitting'}>
               <label className="trap" htmlFor="company-site">
                 Company Site
                 <input id="company-site" name="_gotcha" type="text" tabIndex="-1" autoComplete="off" />
@@ -201,6 +208,8 @@ function App() {
 
               {formMessage && <p className="status error">{formMessage}</p>}
             </form>
+              )}
+            </>
           )
         ) : (
           <div className="status-card" role="status" aria-live="polite">
