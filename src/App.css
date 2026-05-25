@@ -39,8 +39,8 @@ main {
   min-height: clamp(520px, 68vh, 780px);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 3rem 2.5rem;
+  justify-content: flex-start;
+  padding: 2rem 2.5rem 3rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
 }
 
@@ -85,7 +85,10 @@ main {
 .hero-content {
   position: relative;
   z-index: 1;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: clamp(460px, 60vh, 700px);
   max-width: 680px;
 }
 
@@ -94,6 +97,11 @@ main {
   align-items: center;
   gap: 1rem;
   margin-bottom: 1.5rem;
+}
+
+.brand-row-top {
+  align-self: flex-start;
+  margin-bottom: 0;
 }
 
 .github-logo {
@@ -119,7 +127,7 @@ main {
 }
 
 h1 {
-  margin: 0 0 1rem;
+  margin: auto 0 1rem;
   color: #ffffff;
   font-size: clamp(2rem, 4.5vw, 3.4rem);
   line-height: 1.05;
@@ -288,6 +296,10 @@ h2 {
   gap: 1.5rem;
 }
 
+.signup-form-only {
+  grid-template-columns: 1fr;
+}
+
 .signup-copy p {
   color: var(--gh-text-soft);
   margin: 0 0 0.65rem;
@@ -307,6 +319,7 @@ h2 {
 .signup-form {
   display: grid;
   gap: 0.45rem;
+  max-width: 720px;
 }
 
 .signup-form label {
@@ -418,19 +431,23 @@ footer p + p {
 @media (max-width: 960px) {
   .hero-content {
     text-align: center;
+    align-items: center;
   }
 
   .brand-row {
     justify-content: center;
   }
 
-  .hero-copy {
-    margin-left: auto;
-    margin-right: auto;
+  .brand-row-top {
+    align-self: center;
   }
 
   .cta {
     align-self: center;
+  }
+
+  h1 {
+    margin-top: auto;
   }
 }
 
@@ -442,12 +459,16 @@ footer p + p {
 
 @media (max-width: 620px) {
   .hero {
-    padding: 2rem 1.25rem;
+    padding: 1.5rem 1.25rem 2rem;
     min-height: clamp(420px, 62vh, 560px);
   }
 
   .hero-bg-img {
     object-position: center center;
+  }
+
+  .hero-content {
+    min-height: clamp(360px, 54vh, 480px);
   }
 
   .lineup-row {
