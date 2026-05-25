@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import './App.css'
-import heroImg from './assets/hero.png'
+import heroImg from './assets/TruistGitHub.png'
 
 const FORM_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/YOUR_FORM_ID'
 const DEFAULT_TURNSTILE_SITE_KEY = import.meta.env.PROD ? '' : '1x00000000000000000000AA'
@@ -55,8 +55,14 @@ function StitchDivider() {
 }
 
 function App() {
+  const signupRef = useRef(null)
   const [formStatus, setFormStatus] = useState('idle')
   const [formMessage, setFormMessage] = useState('')
+
+  function handleScrollToSignup(event) {
+    event.preventDefault()
+    signupRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -123,7 +129,7 @@ function App() {
           <p className="hero-copy">
             An invite-only customer event focused on AI-assisted development, platform engineering, and secure software delivery.
           </p>
-          <a href="#signup" className="cta">
+          <a href="#signup" className="cta" onClick={handleScrollToSignup}>
             <DiamondIcon />
             <span>Request Invitation</span>
           </a>
@@ -155,7 +161,7 @@ function App() {
         </ol>
       </section>
 
-      <section id="signup" className="signup" aria-labelledby="signup-heading">
+      <section id="signup" ref={signupRef} className="signup" aria-labelledby="signup-heading">
         <div className="signup-copy">
           <h2 id="signup-heading">Reserve Your Seat</h2>
           <p>Here&apos;s what to expect from the evening.</p>
@@ -167,45 +173,45 @@ function App() {
           </ul>
         </div>
 
-        <form onSubmit={handleSubmit} className="signup-form" noValidate>
-          <input type="hidden" name="_subject" value="GitHub Night @ The Braves registration" />
-          <label className="trap" htmlFor="company-site">
-            Company Site
-            <input id="company-site" name="_gotcha" type="text" tabIndex="-1" autoComplete="off" />
-          </label>
+        {formStatus === 'success' ? (
+          <div className="status-card success" role="status" aria-live="polite">
+            <h3>Invitation request received.</h3>
+            <p>{formMessage}</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="signup-form" noValidate aria-busy={formStatus === 'submitting'}>
+            <input type="hidden" name="_subject" value="GitHub Night @ The Braves registration" />
+            <label className="trap" htmlFor="company-site">
+              Company Site
+              <input id="company-site" name="_gotcha" type="text" tabIndex="-1" autoComplete="off" />
+            </label>
 
-          <label htmlFor="full_name">Full name</label>
-          <input id="full_name" name="full_name" type="text" required />
+            <label htmlFor="first_name">First Name</label>
+            <input id="first_name" name="first_name" type="text" autoComplete="given-name" required />
 
-          <label htmlFor="email">Work email</label>
-          <input id="email" name="email" type="email" required />
+            <label htmlFor="last_name">Last Name</label>
+            <input id="last_name" name="last_name" type="text" autoComplete="family-name" required />
 
-          <label htmlFor="organization">Organization (optional)</label>
-          <input id="organization" name="organization" type="text" />
+            <label htmlFor="company">Company</label>
+            <input id="company" name="company" type="text" autoComplete="organization" required />
 
-          <label htmlFor="dietary">Dietary requests (optional)</label>
-          <textarea id="dietary" name="dietary" rows="2"></textarea>
+            <label htmlFor="email">Work Email</label>
+            <input id="email" name="email" type="email" inputMode="email" autoComplete="email" required />
 
-          <label htmlFor="accessibility">Accessibility needs (optional)</label>
-          <textarea id="accessibility" name="accessibility" rows="2"></textarea>
+            <label htmlFor="phone">Phone Number</label>
+            <input id="phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" required />
 
-          <label className="consent" htmlFor="consent">
-            <input id="consent" name="consent" type="checkbox" required />
-            I agree to event registration processing and follow-up confirmation email.
-          </label>
+            {SHOW_TURNSTILE && (
+              <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="dark"></div>
+            )}
 
-          {SHOW_TURNSTILE && (
-            <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="dark"></div>
-          )}
+            <button type="submit" disabled={formStatus === 'submitting'}>
+              {formStatus === 'submitting' ? 'Submitting...' : 'Request Invitation'}
+            </button>
 
-          <button type="submit" disabled={formStatus === 'submitting'}>
-            {formStatus === 'submitting' ? 'Submitting...' : 'Complete Registration'}
-          </button>
-
-          {formMessage && (
-            <p className={formStatus === 'success' ? 'status success' : 'status error'}>{formMessage}</p>
-          )}
-        </form>
+            {formMessage && <p className="status error">{formMessage}</p>}
+          </form>
+        )}
       </section>
 
       <footer>
