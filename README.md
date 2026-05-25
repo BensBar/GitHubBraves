@@ -6,18 +6,16 @@ Static React/Vite microsite designed for GitHub Pages with secure external regis
 
 - Graphically intense landing page with Braves + GitHub branding
 - Dynamic countdown, seat-tier cards, and timeline cards
-- External secure registration flow (Formspree endpoint)
-- Cloudflare Turnstile challenge integration point
+- Registration flow that posts directly to a Google Form
 - Legal trademark and privacy copy for launch readiness
 
 ## Secure architecture
 
 This repository only serves static content on GitHub Pages.
 
-- Form posts go to `VITE_FORMSPREE_ENDPOINT` (or another secure external endpoint)
-- Bot checks are handled with Cloudflare Turnstile (`VITE_TURNSTILE_SITE_KEY`)
-- Turnstile is hidden in production builds by default; set `VITE_HIDE_TURNSTILE_IN_PROD=false` to show it
-- Server-side validation, rate limiting, and secure storage must be configured in the external backend
+- Form posts go to a Google Form `formResponse` endpoint via `VITE_GOOGLE_FORM_RESPONSE_URL`
+- Submissions land in Google Forms / linked Google Sheet owned by the event team
+- Google handles HTTPS, abuse mitigation, and storage
 - No customer registration data is stored in this repository
 
 ## Local development
@@ -43,8 +41,6 @@ Build output is generated in `dist/` and can be published with a standard GitHub
 
 ## Production setup checklist
 
-1. Replace `VITE_FORMSPREE_ENDPOINT` with a live secure form endpoint
-2. Replace `VITE_TURNSTILE_SITE_KEY` with your production Turnstile site key
-3. Leave `VITE_HIDE_TURNSTILE_IN_PROD=true` (default) to keep Turnstile hidden in production, or set `VITE_HIDE_TURNSTILE_IN_PROD=false` to show it
-4. Confirm external provider handles HTTPS, rate limiting, validation, and private data storage
-5. Verify logo licensing approval for Atlanta Braves assets before public release
+1. Confirm `VITE_GOOGLE_FORM_RESPONSE_URL` (and the entry IDs in `src/App.jsx`) match the live Google Form
+2. Ensure the Google Form is set to "Accepting responses" and not restricted to a single Google Workspace domain
+3. Verify logo licensing approval for Atlanta Braves assets before public release

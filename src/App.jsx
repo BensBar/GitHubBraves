@@ -3,11 +3,17 @@ import './App.css'
 import heroImg from './assets/TruistGitHub.png'
 import heroImgMobile from './assets/TruistGitHub-mobile.png'
 
-const FORM_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/YOUR_FORM_ID'
-const DEFAULT_TURNSTILE_SITE_KEY = import.meta.env.PROD ? '' : '1x00000000000000000000AA'
-const TURNSTILE_SITE_KEY = (import.meta.env.VITE_TURNSTILE_SITE_KEY || DEFAULT_TURNSTILE_SITE_KEY).trim()
-const HIDE_TURNSTILE_IN_PROD = import.meta.env.VITE_HIDE_TURNSTILE_IN_PROD !== 'false'
-const SHOW_TURNSTILE = Boolean(TURNSTILE_SITE_KEY) && !(import.meta.env.PROD && HIDE_TURNSTILE_IN_PROD)
+const GOOGLE_FORM_RESPONSE_URL =
+  import.meta.env.VITE_GOOGLE_FORM_RESPONSE_URL ||
+  'https://docs.google.com/forms/d/e/1FAIpQLSeyiFqIKWUAkSRUCDdAFNOxhSs8qfuBQEyf7XK-UdsY8aMJsw/formResponse'
+
+const GOOGLE_FORM_ENTRY_IDS = {
+  first_name: 'entry.878299649',
+  last_name: 'entry.1345233437',
+  company: 'entry.2100624345',
+  email: 'entry.2119109114',
+  phone: 'entry.1859374818',
+}
 
 const LINEUP = [
   { inning: '1st', time: '5:30 PM', title: 'Park' },
@@ -39,31 +45,38 @@ function App() {
   async function handleSubmit(event) {
     event.preventDefault()
 
-    if (FORM_ENDPOINT.includes('YOUR_FORM_ID')) {
-      setFormStatus('error')
-      setFormMessage('Set the VITE_FORMSPREE_ENDPOINT environment variable with your live Formspree form URL before launch.')
+    const form = event.currentTarget
+    if (!form.checkValidity()) {
+      form.reportValidity()
+      return
+    }
+
+    const formData = new FormData(form)
+
+    if ((formData.get('_gotcha') ?? '').toString().trim() !== '') {
+      // Honeypot tripped — silently pretend success so bots don't retry.
+      form.reset()
+      setFormStatus('success')
+      setFormMessage('You are on the list. Watch for a confirmation email from the event team.')
       return
     }
 
     setFormStatus('submitting')
     setFormMessage('')
 
-    const formData = new FormData(event.currentTarget)
+    const payload = new FormData()
+    for (const [field, entryId] of Object.entries(GOOGLE_FORM_ENTRY_IDS)) {
+      payload.append(entryId, formData.get(field) ?? '')
+    }
 
     try {
-      const response = await fetch(FORM_ENDPOINT, {
+      await fetch(GOOGLE_FORM_RESPONSE_URL, {
         method: 'POST',
-        headers: {
-          Accept: 'application/json',
-        },
-        body: formData,
+        mode: 'no-cors',
+        body: payload,
       })
 
-      if (!response.ok) {
-        throw new Error('Registration failed')
-      }
-
-      event.currentTarget.reset()
+      form.reset()
       setFormStatus('success')
       setFormMessage('You are on the list. Watch for a confirmation email from the event team.')
     } catch {
@@ -84,7 +97,7 @@ function App() {
         />
       </div>
 
-      <header className="hero" aria-label="GitHub Day at Truist Park header">
+      <header className="hero" aria-label="GitHub Night at Truist Park header">
         <img
           className="hero-bg-img"
           src={heroImg}
@@ -102,10 +115,7 @@ function App() {
         <div className="hero-stitch" aria-hidden="true" />
 
         <div className="hero-content">
-          <h1>GitHub Day at Truist Park</h1>
-          <p className="hero-copy">
-            An invite-only customer event focused on AI-assisted development, platform engineering, and secure software delivery.
-          </p>
+          <h1>GitHub Night at Truist Park</h1>
         </div>
       </header>
 
@@ -144,7 +154,6 @@ function App() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="signup-form" noValidate aria-busy={formStatus === 'submitting'}>
-            <input type="hidden" name="_subject" value="GitHub Day at Truist Park registration" />
             <label className="trap" htmlFor="company-site">
               Company Site
               <input id="company-site" name="_gotcha" type="text" tabIndex="-1" autoComplete="off" />
@@ -160,14 +169,28 @@ function App() {
             <input id="company" name="company" type="text" autoComplete="organization" required />
 
             <label htmlFor="email">Work Email</label>
-            <input id="email" name="email" type="email" inputMode="email" autoComplete="email" required />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+              title="Enter a valid email address, for example name@example.com"
+              required
+            />
 
             <label htmlFor="phone">Phone Number</label>
-            <input id="phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" required />
-
-            {SHOW_TURNSTILE && (
-              <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="dark"></div>
-            )}
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              pattern="^[+]?[\s\-().]*([0-9][\s\-().]*){10,15}$"
+              title="Enter a phone number with 10–15 digits. Spaces, dashes, parentheses, and a leading + are allowed."
+              required
+            />
 
             <button type="submit" disabled={formStatus === 'submitting'}>
               {formStatus === 'submitting' ? 'Submitting…' : 'Reserve Seat'}
@@ -185,9 +208,10 @@ function App() {
           for production use.
         </p>
         <p>
-          Registration is processed by an external Formspree backend over HTTPS, with
-          Cloudflare Turnstile bot defense. Customer data is stored outside this GitHub
-          Pages repository — review your provider privacy terms before launch.
+          Registration submissions are sent directly to a Google Form owned by
+          the event team. Customer data is stored in Google Sheets/Forms outside
+          this GitHub Pages repository — review Google&apos;s privacy terms
+          before launch.
         </p>
       </footer>
     </main>
