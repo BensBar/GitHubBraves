@@ -8,11 +8,11 @@ const GOOGLE_FORM_RESPONSE_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLSeyiFqIKWUAkSRUCDdAFNOxhSs8qfuBQEyf7XK-UdsY8aMJsw/formResponse'
 
 const GOOGLE_FORM_ENTRY_IDS = {
-  first_name: 'entry.29048284',
-  last_name: 'entry.1640902461',
-  company: 'entry.487736331',
-  email: 'entry.855098151',
-  phone: 'entry.550226682',
+  first_name: 'entry.878299649',
+  last_name: 'entry.1345233437',
+  company: 'entry.2100624345',
+  email: 'entry.2119109114',
+  phone: 'entry.1859374818',
 }
 
 const LINEUP = [
