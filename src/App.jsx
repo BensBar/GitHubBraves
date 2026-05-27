@@ -154,7 +154,7 @@ function App() {
           formStatus === 'success' ? (
             <div className="status-card success" role="status" aria-live="polite">
               <h3>Thank you for registering.</h3>
-              <p>We'll follow up directly. This form does not send an automatic confirmation email.</p>
+              <p>Check your email for a confirmation. We'll follow up with event details soon.</p>
             </div>
           ) : (
             <>
