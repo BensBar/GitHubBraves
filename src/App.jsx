@@ -166,7 +166,7 @@ function App() {
               {formOpen && (
                 <form onSubmit={handleSubmit} className="signup-form" noValidate aria-busy={formStatus === 'submitting'}>
               <div className="trap" aria-hidden="true">
-                <input id="confirmation-code" name="_gotcha" type="checkbox" tabIndex="-1" aria-hidden="true" />
+                <input id="confirmation-code" name="_gotcha" type="checkbox" tabIndex="-1" />
               </div>
 
               <label htmlFor="first_name">First Name</label>
