@@ -56,7 +56,7 @@ function App() {
 
     const formData = new FormData(form)
 
-    if ((formData.get('_gotcha') ?? '').toString().trim() !== '') {
+    if (formData.has('_gotcha')) {
       // Honeypot tripped — silently pretend success so bots don't retry.
       form.reset()
       setFormStatus('success')
@@ -154,6 +154,7 @@ function App() {
           formStatus === 'success' ? (
             <div className="status-card success" role="status" aria-live="polite">
               <h3>Thank you for registering.</h3>
+              <p>We&apos;ll follow up directly. This form does not send an automatic confirmation email.</p>
             </div>
           ) : (
             <>
@@ -164,10 +165,9 @@ function App() {
               )}
               {formOpen && (
                 <form onSubmit={handleSubmit} className="signup-form" noValidate aria-busy={formStatus === 'submitting'}>
-              <label className="trap" htmlFor="company-site">
-                Company Site
-                <input id="company-site" name="_gotcha" type="text" tabIndex="-1" autoComplete="off" />
-              </label>
+              <div className="trap" aria-hidden="true">
+                <input id="confirmation-code" name="_gotcha" type="checkbox" tabIndex="-1" aria-hidden="true" />
+              </div>
 
               <label htmlFor="first_name">First Name</label>
               <input id="first_name" name="first_name" type="text" autoComplete="given-name" required />
