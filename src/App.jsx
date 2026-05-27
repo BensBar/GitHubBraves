@@ -154,7 +154,7 @@ function App() {
           formStatus === 'success' ? (
             <div className="status-card success" role="status" aria-live="polite">
               <h3>Thank you for registering.</h3>
-              <p>We&apos;ll follow up directly. This form does not send an automatic confirmation email.</p>
+              <p>We'll follow up directly. This form does not send an automatic confirmation email.</p>
             </div>
           ) : (
             <>
@@ -166,7 +166,7 @@ function App() {
               {formOpen && (
                 <form onSubmit={handleSubmit} className="signup-form" noValidate aria-busy={formStatus === 'submitting'}>
               <div className="trap" aria-hidden="true">
-                <input id="confirmation-code" name="_gotcha" type="checkbox" tabIndex="-1" />
+                <input id="bot-check" name="_gotcha" type="checkbox" tabIndex="-1" />
               </div>
 
               <label htmlFor="first_name">First Name</label>
