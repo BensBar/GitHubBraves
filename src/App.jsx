@@ -56,7 +56,7 @@ function App() {
 
     const formData = new FormData(form)
 
-    if (formData.has('_gotcha')) {
+    if (formData.get('_gotcha') === 'on') {
       // Honeypot tripped — silently pretend success so bots don't retry.
       form.reset()
       setFormStatus('success')
@@ -166,7 +166,7 @@ function App() {
               {formOpen && (
                 <form onSubmit={handleSubmit} className="signup-form" noValidate aria-busy={formStatus === 'submitting'}>
               <div className="trap" aria-hidden="true">
-                <input id="bot-check" name="_gotcha" type="checkbox" tabIndex="-1" />
+                <input id="bot-check" name="_gotcha" type="checkbox" tabIndex="-1" autoComplete="off" />
               </div>
 
               <label htmlFor="first_name">First Name</label>
